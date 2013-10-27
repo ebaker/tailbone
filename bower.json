@@ -1,0 +1,15 @@
+{
+  "name": "tailbone components",
+  "version": "0.1.0",
+  "dependencies": {
+    "jquery": null,
+    "underscore-amd": null,
+    "backbone-amd": null,
+    "backbone.localStorage": null,
+    "requirejs": null,
+    "socket.io": null,
+    "socket.io-client": null,
+    "moment": null,
+    "bootstrap": null
+  }
+}

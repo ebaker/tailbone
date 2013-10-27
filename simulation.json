@@ -1,0 +1,56 @@
+[{
+  "name"      : "tailbone-server",
+  "script"    : "server.js",
+  "exec_mode" : "fork_mode",
+  "out_file" : "/tmp/tailbone-server-output.log",
+  "error_file"   : "/tmp/tailbone-server-error.log"
+},
+{
+  "name"      : "echo-5000",
+  "script"    : "echo.js",
+  "args"      : "['/tmp/echo-5000.log', '5000']",
+  "exec_mode" : "fork_mode",
+  "out_file" : "/tmp/echo-5000-output.log",
+  "error_file"   : "/tmp/echo-5000-error.log"
+},
+{
+  "name"      : "echo-10000",
+  "script"    : "echo.js",
+  "args"      : "['/tmp/echo-10000.log', '10000']",
+  "exec_mode" : "fork_mode",
+  "out_file" : "/tmp/echo-10000-output.log",
+  "error_file"   : "/tmp/echo-10000-error.log"
+},
+{
+  "name"      : "echo-15000",
+  "script"    : "echo.js",
+  "args"      : "['/tmp/echo-15000.log', '15000']",
+  "exec_mode" : "fork_mode",
+  "out_file" : "/tmp/echo-15000-output.log",
+  "error_file"   : "/tmp/echo-15000-error.log"
+},
+{
+  "name"      : "watch-5000",
+  "script"    : "watch.js",
+  "args"      : "['/tmp/echo-5000.log']",
+  "exec_mode" : "fork_mode",
+  "out_file" : "/tmp/watch-5000-output.log",
+  "error_file"   : "/tmp/watch-5000-error.log"
+},
+{
+  "name"      : "watch-10000",
+  "script"    : "watch.js",
+  "args"      : "['/tmp/echo-10000.log']",
+  "exec_mode" : "fork_mode",
+  "out_file" : "/tmp/watch-10000-output.log",
+  "error_file"   : "/tmp/watch-10000-error.log"
+},
+{
+  "name"      : "watch-15000",
+  "script"    : "watch.js",
+  "args"      : "['/tmp/echo-15000.log']",
+  "exec_mode" : "fork_mode",
+  "out_file" : "/tmp/watch-15000-output.log",
+  "error_file"   : "/tmp/watch-15000-error.log"
+}
+]

@@ -1,0 +1,12 @@
+{
+  "name": "tailbone"
+, "version": "0.1.0"
+, "dependencies": {
+  "redis": "latest"
+  , "hiredis": "latest"
+  , "socket.io": "latest"
+  , "socket.io-client": "latest"
+  , "underscore": "latest"
+  , "pm2": "latest"
+  }
+}

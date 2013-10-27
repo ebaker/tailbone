@@ -1,0 +1,65 @@
+* Tailbone
+
+** Overview
+Tailbone attempts to created a web application mimicking the tail -f
+comman line utility in real time. The administrator of a server would start
+watch.js for each file that needs to be watched. The web client
+displays a list of files that are being watched, allowing the user to
+filter the log being viewed as well as update the active file if the
+user is scrolled to the latest entry.
+
+** Web Client
+*** Models
+    - file.js - represents watched file
+    - logline.js - represents individual watched file line
+*** Collections
+    - filelist.js - list of file models for user selection
+    - log.js - list of log lines to be viewed 
+*** Views
+    - app.js - main app view, socket.io connects here
+    - file.js - basic file view, allows click for activation
+    - filelist.js - manages the above file views when recived from
+      server
+    - logline.js - line of log file being watched, hide or show the
+      line depending on file selected
+    - log.js - manages lines of log file, decides whether to hide or
+      show newly recieved files from the server
+*** Layout
+    The web interface is simple, only allowing the user to select the
+    current active file. Initially it was designed entirely client
+    side using localStorage plugin to flesh out the models,
+    collections, and views. It was then connected to socket.io with
+    calls for files and loglines. After connecting the backend to
+    redis, files and lines recieved ID's. With ID's available, Backbone's
+    sync method was overwritten to request the files upon connection.
+    Moving forward, the entire system to should reflect the changes
+    made to the /files endpoint. For now, leave the API unchanged
+    until additional functionality is neccesary.
+
+** Node Backend
+*** watch.js
+    This is the server that utilized the tail -f command to watch a
+    file. When tail -f has an update, it is reported to watch.js.
+    Watch.js is connected to server.js via socket.io and communicate
+    the changes from tail -f upon recepit. Rather than having
+    server.js watch the file, a separate watch.js was created for
+    modularity. Currently the system has only been tested to watch
+    files on the localhost that's running server.js. With watch.js
+    communicating to server.js over socket.io, watch.js could be
+    placed on other servers and report logs back to the main server.js
+    instance for display on the client interface.
+*** server.js
+    Routes client and watch.js requests via socket io. When a watch.js
+    connection is recieved, the file is added to the global file list
+    in redis. New log line entries recieved will be added into redis
+    and associated with the id of the watch file. Log line list
+    associated with files is trimmed to 10 for clients to view. When a client
+    connects, the watched files are retrieved from the global file
+    list. From here the log lines associated with each of those file
+    id's is retrieved and sent to the connected client. When new lines
+    are recieved from watch.js they are immediately sent to connected
+    clients as well as cached in redis and trimmed to 10 for each file.
+*** echo.js
+    Takes filename and time interval command line parameters. Echos
+    one line to a file on the given time interval, useful for testing
+    system.
