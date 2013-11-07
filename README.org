@@ -1,4 +1,14 @@
 * Tailbone
+#+BEGIN_SRC sh
+git clone https://github.com/ebaker/tailbone.git
+cd tailbone
+npm install
+bower install
+node server.js
+
+npm install pm2 -g (installs pm2 for simulation.json)
+pm2 simulation.json
+#+END_SRC sh
 
 ** Overview
 Tailbone attempts to created a web application mimicking the tail -f
@@ -9,6 +19,17 @@ filter the log being viewed as well as update the active file if the
 user is scrolled to the latest entry.
 
 ** Web Client
+    The web interface is simple, only allowing the user to select the
+    current active file. Initially it was designed entirely client
+    side using localStorage plugin to flesh out the models,
+    collections, and views. It was then connected to socket.io with
+    calls for files and loglines. After connecting the backend to
+    redis, files and lines recieved ID's. With ID's available, Backbone's
+    sync method was overwritten to request the files upon connection.
+    Moving forward, the entire system to should reflect the changes
+    made to the /files endpoint. For now, leave the API unchanged
+    until additional functionality is neccesary.
+
 *** Models
     - file.js - represents watched file
     - logline.js - represents individual watched file line
@@ -24,17 +45,6 @@ user is scrolled to the latest entry.
       line depending on file selected
     - log.js - manages lines of log file, decides whether to hide or
       show newly recieved files from the server
-*** Layout
-    The web interface is simple, only allowing the user to select the
-    current active file. Initially it was designed entirely client
-    side using localStorage plugin to flesh out the models,
-    collections, and views. It was then connected to socket.io with
-    calls for files and loglines. After connecting the backend to
-    redis, files and lines recieved ID's. With ID's available, Backbone's
-    sync method was overwritten to request the files upon connection.
-    Moving forward, the entire system to should reflect the changes
-    made to the /files endpoint. For now, leave the API unchanged
-    until additional functionality is neccesary.
 
 ** Node Backend
 *** watch.js
