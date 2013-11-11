@@ -24,10 +24,10 @@ define(['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
       var $active = $('.file-btn.active')[0];
       if ($active != undefined)
       if (this.model.get('fid') == $active.id){
-        console.log('showAddedFile');
+        // console.log('showAddedFile');
       }
       else{
-        console.log('hideAddedFile');
+        // console.log('hideAddedFile');
         this.doHide();
       }
       return this;

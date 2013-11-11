@@ -1,5 +1,9 @@
 define(['jquery', 'underscore', 'backbone', 'views/filelist', 'views/log', 'socketio'],
        function($, _, Backbone, FileListView,LogView, io){
+         // Production Settings
+         var CLIENT_API_ENDPOINT = 'http://tailboneapi.eliotbaker.com/client';
+         // Dev settings
+         // var CLIENT_API_ENDPOINT = 'http://localhost:3001/client';
 
          // The Application
          // ---------------
@@ -32,8 +36,26 @@ define(['jquery', 'underscore', 'backbone', 'views/filelist', 'views/log', 'sock
            el: $("#tailboneapp"),
 
            initialize: function() {
+             this.isAppLoading = true;
+             Backbone.trigger('toggleAppLoading', false);
              // console.log('initializing app view...');
-             var s = io.connect('http://localhost:3001/client'); 
+             var s = io.connect(CLIENT_API_ENDPOINT);
+
+             console.log('socket: ', s);
+
+             s.on('connect', function(){
+               // console.log('connected to s');
+             });
+
+             s.on('error', function (data) {
+               console.log(data || 'error');
+               $('#errorModal').modal('show');
+             });
+
+             s.on('disconnect', function(){
+               // console.log('disconnected to s');
+               Backbone.trigger('toggleAppLoading', true);
+             });
 
              s.on('logline', function (data) {
                Backbone.trigger("newlogline", data);
@@ -45,6 +67,7 @@ define(['jquery', 'underscore', 'backbone', 'views/filelist', 'views/log', 'sock
              });
              Backbone.socket = s;
              this.socket = s;
+             Backbone.on('toggleAppLoading', this.toggleAppLoading, this);
              this.render();
            },
 
@@ -55,6 +78,22 @@ define(['jquery', 'underscore', 'backbone', 'views/filelist', 'views/log', 'sock
              logView.socket = this.socket;
              this.$("#file-container").append(fileListView.render().el);
              this.$("#log-container").append(logView.render().el);
+           },
+
+           toggleAppLoading: function(toggleValue){
+             this.isAppLoading = toggleValue;
+             if (!this.isAppLoading){
+               $('#circularG').fadeOut(function(){
+                 $('#files-logs').fadeIn();
+                 $('#log-container').animate({"scrollTop": $('#log-container')[0].scrollHeight}, "fast");
+               });
+               
+             }
+             else{
+               $('#circularG').show();
+               $('#files-logs').hide();
+             }
+
            }
          });
          return App;

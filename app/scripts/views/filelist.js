@@ -54,6 +54,7 @@ define(['jquery', 'underscore', 'backbone', 'collections/files', 'views/file'],
                // console.log('file: ', file.name);
                c.add(file);
              });
+             Backbone.trigger('toggleAppLoading', false);
            }
          });
          return FileListView;

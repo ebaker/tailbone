@@ -10,6 +10,7 @@
 
     <!-- Custom styles for this template -->
     <link href="template.css" rel="stylesheet">
+    <link href="spinners.css" rel="stylesheet">
 
 </head>
 
@@ -52,18 +53,60 @@
        </div>
       <div class="starter-template">
         <div class="row">
-          <div class="col-md-4">    
+          <!-- APP SPINNER -->
+            <div id="circularG" class="app-loader">
+              <div id="circularG_1" class="circularG">
+              </div>
+              <div id="circularG_2" class="circularG">
+              </div>
+              <div id="circularG_3" class="circularG">
+              </div>
+              <div id="circularG_4" class="circularG">
+              </div>
+              <div id="circularG_5" class="circularG">
+              </div>
+              <div id="circularG_6" class="circularG">
+              </div>
+              <div id="circularG_7" class="circularG">
+              </div>
+              <div id="circularG_8" class="circularG">
+              </div>
+            </div>
+
+        </div>
+        <div class="row" id="files-logs">
+          <div class="col-md-4">
             <!-- FILE LIST HERE -->
             <div id="file-container">
                 <div id="file-list" class="list-group panel panel-info">
                 <div class="panel-heading">Watched Files</div>
                 </div>
-              
+
             </div>
           </div>
           <div class="col-md-8 ">
           <div class="panel panel-default panel-primary">
             <div id="logline-name" class="panel-heading">(*)</div>
+            <!-- LOG LOADING SPINNER -->
+            <div id="fountainG" class="log-loader">
+              <div id="fountainG_1" class="fountainG">
+              </div>
+              <div id="fountainG_2" class="fountainG">
+              </div>
+              <div id="fountainG_3" class="fountainG">
+              </div>
+              <div id="fountainG_4" class="fountainG">
+              </div>
+              <div id="fountainG_5" class="fountainG">
+              </div>
+              <div id="fountainG_6" class="fountainG">
+              </div>
+              <div id="fountainG_7" class="fountainG">
+              </div>
+              <div id="fountainG_8" class="fountainG">
+              </div>
+            </div>
+            
             <!-- LOG LIST HERE -->
             <div id="log-container">
             <ul id="logline-list" class="list-group"></ul>
@@ -101,6 +144,25 @@
       <li>If the log line is associated with an inactive file, it will
       be hidden until that file become active.</li>
     </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+<!--Connection Error Modal -->
+  <div class="modal fade" id="errorModal" role="dialog" aria-labelledby="connectionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Connection</h4>
+        </div>
+        <div class="modal-body">
+          An error has occurred with the server connection.<br /> Please try
+          again later, thank you!
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

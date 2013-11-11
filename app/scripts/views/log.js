@@ -6,6 +6,7 @@ define(['jquery', 'underscore', 'backbone', 'collections/loglines', 'views/logli
            el: $('#logline-list'),
 
            initialize: function(){
+             this.isLoading = true;
              this.collection = new LogLineCollection();
 
              this.collection.bind('add', this.addOneLine, this);
@@ -32,6 +33,8 @@ define(['jquery', 'underscore', 'backbone', 'collections/loglines', 'views/logli
              }
 
              var view = new LogLineView({model: logline});
+             this.toggleLogLoading(false);
+
              this.$el.append(view.render().el);
              if (isAnimated)
                $('#log-container').animate({"scrollTop": $('#log-container')[0].scrollHeight}, "fast");
@@ -61,11 +64,22 @@ define(['jquery', 'underscore', 'backbone', 'collections/loglines', 'views/logli
 
            removeLogs: function(){
              this.collection.each(function(model) { model.destroy(); } );
+             this.toggleLogLoading(true);
            },
 
            newLogline: function(logline){
              // console.log('newLogline callback: ', logline);
              this.collection.add(logline);
+           },
+
+           toggleLogLoading: function(toggleValue){
+             this.isLoading = toggleValue;
+             if (!this.isLoading){
+               $('.log-loader').hide();
+             }
+             else{
+               $('.log-loader').show();
+             }             
            }
 
          });
