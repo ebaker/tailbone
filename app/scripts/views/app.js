@@ -1,9 +1,9 @@
 define(['jquery', 'underscore', 'backbone', 'views/filelist', 'views/log', 'socketio'],
        function($, _, Backbone, FileListView,LogView, io){
          // Production Settings
-         var CLIENT_API_ENDPOINT = 'http://tailboneapi.eliotbaker.com/client';
+         // var API_ENDPOINT = 'http://tailboneapi.eliotbaker.com';
          // Dev settings
-         // var CLIENT_API_ENDPOINT = 'http://localhost:3001/client';
+         var API_ENDPOINT = 'http://localhost:3001';
 
          // The Application
          // ---------------
@@ -39,7 +39,7 @@ define(['jquery', 'underscore', 'backbone', 'views/filelist', 'views/log', 'sock
              this.isAppLoading = true;
              Backbone.trigger('toggleAppLoading', false);
              // console.log('initializing app view...');
-             var s = io.connect(CLIENT_API_ENDPOINT);
+             var s = io.connect(API_ENDPOINT + '/client');
 
              console.log('socket: ', s);
 
