@@ -4,8 +4,8 @@
 , "dependencies": {
   "redis": "latest"
   , "hiredis": "latest"
-  , "socket.io": "latest"
-  , "socket.io-client": "latest"
+  , "socket.io": "0.9.x"
+  , "socket.io-client": "0.9.x"
   , "underscore": "latest"
   , "pm2": "latest"
   }
