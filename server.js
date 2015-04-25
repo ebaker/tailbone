@@ -6,6 +6,14 @@
 var START_FILE_ID = 10;
 var START_LINE_ID = 1000;
 var SOCKET_IO_LISTEN_PORT = 3001;
+var EXPRESS_LISTEN_PORT = process.env.PORT || 3000;
+
+var express = require('express');
+var app = express();
+app.use(express.static(__dirname + '/app'));
+app.listen(EXPRESS_LISTEN_PORT, function(){
+  console.log('listening on %s')
+});
 
 var redis = require("redis"),
     cache = redis.createClient(),
@@ -34,7 +42,7 @@ var nextFileId = cache.get("global:nextFileId", function(err,reply){
 var client = io.of('/client').on('connection', function (socket) {
   socket.on('files:read', function(data){
     cache.lrange("global:files", 0, 10, function(err, reply){
-      // console.log("getFiles.reply", reply); console.log("getFiles.err", err);
+      console.log("getFiles.reply", reply); console.log("getFiles.err", err);
       if (!err){
         reply.forEach(function(fid){
           var fid2name = {};
@@ -45,7 +53,7 @@ var client = io.of('/client').on('connection', function (socket) {
           cache.lrange("file:"+fid+":lines", 0, 10, function(err, lids){
             lids.forEach(function(lid){
               cache.get("line:"+lid+":text", function(err, reply){
-                //console.log("getLines.reply", reply); console.log("getLines.err", err);
+                console.log("getLines.reply", reply); console.log("getLines.err", err);
                 var l = {_id: lid, fid:fid, lineText: reply};
                 socket.emit('logline', l);
               });
@@ -89,6 +97,7 @@ var watch = io.of('/watch').on('connection', function(socket) {
           cache.lpush("file:"+data.fid+":lines", reply);
           data._id = reply;
           // Report to client over socket.io for update
+          // console.log('logline', data)
           client.emit('logline', data);
         }
       });
