@@ -7,8 +7,8 @@
     "backbone-amd": null,
     "backbone.localStorage": null,
     "requirejs": null,
-    "socket.io": null,
-    "socket.io-client": null,
+    "socket.io": "0.9",
+    "socket.io-client": "0.9",
     "moment": null,
     "bootstrap": null
   }
