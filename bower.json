@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "dependencies": {
     "jquery": null,
-    "underscore-amd": null,
-    "backbone-amd": null,
+    "underscore": null,
+    "backbone": null,
     "backbone.localStorage": null,
-    "requirejs": null,
     "socket.io": "0.9",
     "socket.io-client": "0.9",
     "moment": null,
