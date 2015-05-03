@@ -14,9 +14,17 @@ div#log-container{
 }
 
 #files-logs {
-    display: none;
+//    display: none;
 }
 
+.file-list {
+    width: 300px;
+}
+
+li.active{
+    background: black;
+    color: white;
+}
 
 .centertext{
     text-align: center !important;

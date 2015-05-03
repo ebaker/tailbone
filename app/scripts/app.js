@@ -357,5 +357,5 @@ var LogLineView = Backbone.View.extend({
          }
        });
 
-new App;
+// new App;
 console.debug('test');
