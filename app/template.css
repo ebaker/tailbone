@@ -19,6 +19,13 @@ div#log-container{
 
 .file-list {
     width: 300px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.log {
+    width: 600px;
+    display: inline-block;
 }
 
 li.active{

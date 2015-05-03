@@ -50,7 +50,15 @@ var client = io.of('/client').on('connection', function (socket) {
             var f = {_id: fid, name: reply};
             socket.emit('files', [f]);
           });
-          cache.lrange("file:"+fid+":lines", 0, 10, function(err, lids){
+          
+        });
+      }
+    });
+  });
+  socket.on('log:read', function(data){
+    var fid = data._id;
+    console.log('log:read', data);
+  cache.lrange("file:"+fid+":lines", 0, 10, function(err, lids){
             lids.forEach(function(lid){
               cache.get("line:"+lid+":text", function(err, reply){
                 console.log("getLines.reply", reply); console.log("getLines.err", err);
@@ -59,9 +67,6 @@ var client = io.of('/client').on('connection', function (socket) {
               });
             });
           });
-        });
-      }
-    });
   });
 });
 

@@ -2,7 +2,8 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       files: [],
-      activeFile: ''
+      activeFile: '',
+      log: []
     };
   },
   componentDidMount: function(){
@@ -22,26 +23,38 @@ var App = React.createClass({
       console.log('files', data[0]);
       that.state.files.push(data[0]);
       if (!that.state.activeFile){
-        that.setState({activeFile: data[0]._id});
+        that.onActivate(data[0]._id);
+        // that.setState({activeFile: data[0]._id});
       }
       that.setState({files: that.state.files});
       console.log('files updated', that.state.files);
     });
     this.socket.on('logline', function(data) {
-      console.log('logline', data);
+      // step 1 - check if activeFile
+      // step 2 - add to state.log
+      console.log('logline', data.fid, that.state.activeFile);
+      if (that.state.activeFile == data.fid){
+        console.log('that.state.log', that.state.log);
+        that.state.log.push(data);
+        that.setState({log: that.state.log});
+      }
     });
   },
   onActivate: function(id){
     console.log('onActivate', id);
-    this.setState({activeFile: id});
+    this.setState({activeFile: id, log: []});
+    this.socket.emit('log:read', {_id: id});
   },
   render: function() {
   return (
+    <div>
     <FileListReact
       files={this.state.files} 
       activeFile={this.state.activeFile}
       callbackActivate={this.onActivate}
     />
+    <Log log={this.state.log} />
+  </div>
   );
 
   }
@@ -77,6 +90,15 @@ var FileListReact = React.createClass({
   }
 });
 
+
+var Log = React.createClass({
+  render: function (){
+    var log = this.props.log.map(function(line, i){
+      return <li key={line._id}>{line.lineText}</li>;
+    });
+    return <ul className="log">{log}</ul>;
+}
+});
 
 // React.render(new App({}), document.getElementById('starter-template'));
 React.render(new App({}), document.body);
