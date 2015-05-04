@@ -20,22 +20,30 @@ var redis = require("redis"),
     io = require('socket.io').listen(SOCKET_IO_LISTEN_PORT, {log: false, origins: '*:*'});
 
 // Check that DB is initialized, if not, initialize
-var nextLineId = cache.get("global:nextLineId", function(err,reply){
-  console.log("GET nextLineId: ", reply);
-  if (reply == null){
-    console.log("global:nextLineId is null setting to ", START_LINE_ID);
-    cache.set("global:nextLineId", START_LINE_ID, redis.print);
-  }
-  return reply;
-});
-var nextFileId = cache.get("global:nextFileId", function(err,reply){
-  console.log("GET nextFileId: ", reply);
-  if (reply == null){
+var getGlobalIds = function (callback){
+  cache.get("global:nextFileId", function(err, nextFileId){
+  console.log("GET nextFileId: ", nextFileId);
+  if (nextFileId == null){
     console.log("global:nextFileId is null setting to ", START_FILE_ID);
     cache.set("global:nextFileId", START_FILE_ID, redis.print);
+    nextFileId = START_FILE_ID
   }
-  return reply;
+  cache.get("global:nextLineId", function(err, nextLineId){
+    console.log("GET nextLineId: ", nextLineId);
+    if (nextLineId == null){
+      console.log("global:nextLineId is null setting to ", START_LINE_ID);
+      cache.set("global:nextLineId", START_LINE_ID, redis.print);
+      nextLineId = START_LINE_ID;
+    }
+    cache.del("global:files", null, function(err, didClearFiles){
+      callback(nextFileId, nextLineId);
+    });
+  });
 });
+};
+
+getGlobalIds(function(nextFileId, nextLineId){
+
 
 // Socket.io endpoint for web clients connecting that want to see updstes
 // When client requests files, read them from cache and send them via socket.io.
@@ -118,4 +126,5 @@ var watch = io.of('/watch').on('connection', function(socket) {
       });
     });
   });
+});
 });
