@@ -25,6 +25,8 @@ div#log-container{
 
 .log {
     width: 600px;
+    max-height: 200px;
+    overflow-y: scroll;
     display: inline-block;
 }
 

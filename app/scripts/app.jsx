@@ -92,6 +92,17 @@ var FileListReact = React.createClass({
 
 
 var Log = React.createClass({
+  componentWillUpdate: function(){
+    var node = this.getDOMNode();
+    this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
+  },
+  componentDidUpdate: function(){
+    console.log('log did update');
+    if (this.shouldScrollBottom){
+      var node = this.getDOMNode();
+      node.scrollTop = node.scrollHeight;
+    }
+  },
   render: function (){
     var log = this.props.log.map(function(line, i){
       return <li key={line._id}>{line.lineText}</li>;
