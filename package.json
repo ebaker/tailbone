@@ -1,12 +1,22 @@
 {
-  "name": "tailbone"
-, "version": "0.1.0"
-, "dependencies": {
-  "redis": "latest"
-  , "hiredis": "latest"
-  , "socket.io": "0.9.x"
-  , "socket.io-client": "0.9.x"
-  , "underscore": "latest"
-  , "pm2": "latest"
+  "name": "tailbone",
+  "version": "0.1.0",
+  "dependencies": {
+    "browserify": "^10.0.0",
+    "hiredis": "latest",
+    "pm2": "latest",
+    "react": "^0.13.2",
+    "redis": "latest",
+    "socket.io": "0.9.x",
+    "socket.io-client": "0.9.x",
+    "underscore": "latest"
+  },
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-nodemon": "^2.0.3",
+    "gulp-stylus": "^2.0.1",
+    "reactify": "^1.1.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

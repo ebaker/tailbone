@@ -1,3 +1,6 @@
+var io = require('socket.io-client');
+var API_ENDPOINT = 'http://localhost:3001';
+
 var App = React.createClass({
   getInitialState: function() {
     return {
