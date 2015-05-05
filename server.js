@@ -10,7 +10,7 @@ var EXPRESS_LISTEN_PORT = process.env.PORT || 3000;
 
 var express = require('express');
 var app = express();
-app.use(express.static(__dirname + '/app'));
+app.use(express.static(__dirname + '/build'));
 app.listen(EXPRESS_LISTEN_PORT, function(){
   console.log('listening on %s')
 });
